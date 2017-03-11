@@ -7,6 +7,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         VowelCounter vowelCounter = new VowelCounter();
-        vowelCounter.averageVowel("INPUT.txt");
+        vowelCounter.averageVowel("INPUT.txt","OUTPUT.txt");
     }
 }

@@ -2,8 +2,10 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -12,18 +14,58 @@ import static org.junit.Assert.assertEquals;
  */
 public class VowelCounterTest {
     @Test
-    public void averageVowelTest() throws IOException {
+    public void averageVowelTest1() throws IOException {
         VowelCounter tester = new VowelCounter(); // MyClass is tested
 
-        assertEquals(tester.averageVowel("INPUT.TXT"), buildResult2());
-
-        assertEquals(tester.averageVowel("INPUT2.TXT"), buildResult());
+        assertEquals(tester.averageVowel("INPUT.TXT", "OUTPUT.TXT"), buildResult2());
 
 
-      /*  Files.write(Paths.get("test-input.txt"), "Giga, who is programmer is working doing aoeas01010".getBytes("utf-8"),
+        String testText = "Giga, who is programmer is working doing aoeas01010";
+        Files.write(Paths.get("test-input.txt"), testText.getBytes("utf-8"),
                 StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 
-*/
+        tester.averageVowel("test-input.txt", "test-output.txt");
+        String testResult = readFile("test-output.txt");
+
+
+        assertEquals(testResult, buildResult());
+    }
+
+
+    @Test
+    public void averageVowelTest2() throws IOException {
+        VowelCounter tester = new VowelCounter(); // MyClass is tested
+
+        String testText = "Platon made bamboo boats";
+        Files.write(Paths.get("test-input1.txt"), testText.getBytes("utf-8"),
+                StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+
+        tester.averageVowel("test-input1.txt", "test-output1.txt");
+        String testResult = readFile("test-output1.txt");
+
+
+        assertEquals(testResult, buildResult2());
+    }
+
+
+    public String readFile(String file) throws IOException {
+
+        Path path = Paths.get(file);
+        StringBuilder builder = new StringBuilder();
+        try {
+            List<String> contents = Files.readAllLines(path);
+
+            for (String content : contents) {
+                builder.append(content);
+                builder.append(System.lineSeparator());
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+
+        }
+
+        return builder.toString();
     }
 
     private String buildResult() {

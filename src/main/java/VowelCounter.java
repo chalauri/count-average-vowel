@@ -14,7 +14,7 @@ import static java.nio.file.StandardOpenOption.CREATE;
  * Created by G.Chalauri on 3/11/2017.
  */
 public class VowelCounter {
-    public String averageVowel(String file) throws IOException {
+    public String averageVowel(String file, String outputFile) throws IOException {
         String input = readFile(file);
         input = input.toLowerCase();
         String[] splited = splitInWords(input);
@@ -33,7 +33,7 @@ public class VowelCounter {
             }
         }
 
-        writeToFile(result.toString());
+        writeToFile(outputFile,result.toString());
 
         return result.toString();
     }
@@ -101,7 +101,7 @@ public class VowelCounter {
         return result;
     }
 
-    private String readFile(String file) throws IOException {
+    public String readFile(String file) throws IOException {
 
         Path path = Paths.get(file);
         StringBuilder builder = new StringBuilder();
@@ -120,9 +120,9 @@ public class VowelCounter {
         return builder.toString();
     }
 
-    private void writeToFile(String data) throws IOException {
+    private void writeToFile(String outputFile, String data) throws IOException {
 
-        Files.write(Paths.get("OUTPUT.txt"), data.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+        Files.write(Paths.get(outputFile), data.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
     }
 
     private String convertToOutputFormat(Set<Character> vowels, int wordSize, double average) {
