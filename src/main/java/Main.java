@@ -9,5 +9,4 @@ public class Main {
         VowelCounter vowelCounter = new VowelCounter();
         vowelCounter.averageVowel("INPUT.txt");
     }
-
 }

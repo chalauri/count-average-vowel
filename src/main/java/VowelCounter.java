@@ -4,6 +4,7 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -86,13 +87,8 @@ public class VowelCounter {
 
 
         for (String word : words) {
-            for (int index = 0; index < word.length(); index++) {
-                char tempCharacter = word.charAt(index);
-                if (tempCharacter == 'a' || tempCharacter == 'e' || tempCharacter == 'i' || tempCharacter == 'o' || tempCharacter == 'u') {
-                    result++;
-
-                }
-            }
+            int count = word.replaceAll("[^aeiouAEIOU]","").length();
+            result += count;
         }
 
         return result;
@@ -124,18 +120,9 @@ public class VowelCounter {
         return builder.toString();
     }
 
-    private void writeToFile(String data) {
+    private void writeToFile(String data) throws IOException {
 
-        byte byteData[] = data.getBytes();
-        Path p = Paths.get("OUTPUT.txt");
-
-        try (OutputStream out = new BufferedOutputStream(
-                Files.newOutputStream(p, CREATE))) {
-            out.write(byteData, 0, byteData.length);
-        } catch (IOException x) {
-
-        }
-
+        Files.write(Paths.get("OUTPUT.txt"), data.getBytes(), StandardOpenOption.CREATE, StandardOpenOption.WRITE);
     }
 
     private String convertToOutputFormat(Set<Character> vowels, int wordSize, double average) {
@@ -148,7 +135,7 @@ public class VowelCounter {
             prefix = ", ";
         }
 
-        builder.append("), ");
+        builder.append("}, ");
         builder.append(wordSize);
         builder.append(")");
         builder.append(" -> ");
